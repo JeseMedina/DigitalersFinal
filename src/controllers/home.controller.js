@@ -9,7 +9,7 @@ export default async () => {
 
   // Trending
   const getTrending = async () => {
-    const response = await fetch('https://api.themoviedb.org/3/trending/all/day?api_key=c4ded25acda802a0e1f075a5f5eab9db');
+    const response = await fetch('https://api.themoviedb.org/3/trending/all/day?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es');
     return response.json();
   }
 
@@ -17,14 +17,19 @@ export default async () => {
   const trending = await getTrending();
   trending.results.forEach(movie => {
     let img = IMG_URL + movie.backdrop_path;
+    let type;
+    if (movie.media_type === 'movie') {
+      type = '/#movie/'
+    } else {
+      type = '/#tv/'
+    }
     trendingElement.innerHTML += `
-    <img src="${img}" onclick="document.location=this.id+'/#movie/${movie.id}'" alt="${movie.name}">
-    `;
+    <img src="${img}" onclick="document.location=this.id+'${type}${movie.id}'" alt="${movie.name}">`;
   });
 
   // Movies
   const getMovies = async () => {
-    const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=c4ded25acda802a0e1f075a5f5eab9db');
+    const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es');
     return response.json();
   }
   const moviesElement = divElement.querySelector('#movies');

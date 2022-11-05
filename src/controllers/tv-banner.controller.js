@@ -15,8 +15,14 @@ export default async () => {
     const info = await getInfo();
 
     const cover = divElement.querySelector('.selected-movie');
-    let poster = `https://www.themoviedb.org/t/p/w1280${info.backdrop_path}`;
-    cover.style.background = `url(${poster}) no-repeat center `;
+    let back = `https://www.themoviedb.org/t/p/w1280${info.backdrop_path}`;
+    let poster = `https://www.themoviedb.org/t/p/w1280${info.poster_path}`;
+    if (back != null){
+        cover.style.background = `url(${back}) no-repeat center `;
+    }else {
+        cover.style.background = `url(${poster}) no-repeat center `;
+    }
+    
     cover.style.backgroundSize = "cover"
 
     const title = divElement.querySelector('#title');

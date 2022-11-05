@@ -1,4 +1,5 @@
 import views from '../views/movie.html'
+import { calculateProgressBar, onHandleClick, throttle } from '../js/carousel'
 const IMG_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default async () => {
@@ -14,7 +15,6 @@ export default async () => {
     }
 
     const info = await getInfo();
-    console.log(info)
 
     const synopsis = divElement.querySelector('#synopsis');
     const genre = divElement.querySelector('#genre');
@@ -52,7 +52,7 @@ export default async () => {
     for (let i = 0; i < castLength; i++) {
         let img;
         if(credits.cast[i].profile_path === null){
-            img = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsImNvbXBpbGVkX3RoZW1lX2Fzc2V0cy9FTElHTyBSRUNSVUlUTUVOVC9wbmcvdXNlci1wcm9maWxlLWRlZmF1bHQucG5nIl1d';
+            img = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsImNvbXBpbGVkX3RoZW1lX2Fzc2V0cy9FTElHTyBSRUNSVUlUTUVOVC9wbmcvdXNlci1wcm9maWxlLWRlZmF1bHQucG5nIl1d&language=es';
         }else{
             img = IMG_URL + credits.cast[i].profile_path;
         }
@@ -69,7 +69,37 @@ export default async () => {
         `
     }
 
+    const getSimilar = async () => {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
+        return response.json();
+    }
 
+    const similarElement = divElement.querySelector('#similar');
+    const similar = await getSimilar();
+    similar.results.forEach(movie => {
+        let img = IMG_URL + movie.backdrop_path;
+        similarElement.innerHTML += `
+        <img src="${img}" onclick="document.location=this.id+'/#tv/${movie.id}'" alt="${movie.name}">
+        `
+    });
+
+    document.addEventListener("click", e => {
+        let handle
+        if (e.target.matches(".handle")) {
+            handle = e.target
+        } else {
+            handle = e.target.closest(".handle")
+        }
+        if (handle != null) onHandleClick(handle)
+    })
+
+    const throttleProgressBar = throttle(() => {
+        document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
+    }, 250)
+
+    window.addEventListener("resize", throttleProgressBar)
+
+    document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
 
 
     return divElement;

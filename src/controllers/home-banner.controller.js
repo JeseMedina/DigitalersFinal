@@ -15,7 +15,6 @@ export default async () => {
 
     const trending = await getTrending();
     const info = trending.results[getRandomInt(19)]
-    console.log(info)
 
     const cover = divElement.querySelector('.main-movie');
     let poster = `https://www.themoviedb.org/t/p/w1280${info.backdrop_path}`;
@@ -29,7 +28,13 @@ export default async () => {
     description.innerHTML = info.overview;
 
     const moreInfo = divElement.querySelector('#more-info');
-    moreInfo.setAttribute('onclick', `document.location='/#movie/${info.id}'`)
+    let type;
+    if (info.media_type === 'movie') {
+      type = '/#movie/'
+    } else {
+      type = '/#tv/'
+    }
+    moreInfo.setAttribute('onclick', `document.location='${type}${info.id}'`)
 
 
     return divElement;
