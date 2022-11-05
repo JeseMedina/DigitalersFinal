@@ -69,19 +69,19 @@ export default async () => {
         `
     }
 
-    const getSimilar = async () => {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
-        return response.json();
-    }
+    // const getSimilar = async () => {
+    //     const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
+    //     return response.json();
+    // }
 
-    const similarElement = divElement.querySelector('#similar');
-    const similar = await getSimilar();
-    similar.results.forEach(movie => {
-        let img = IMG_URL + movie.backdrop_path;
-        similarElement.innerHTML += `
-        <img src="${img}" onclick="document.location=this.id+'/#tv/${movie.id}'" alt="${movie.name}">
-        `
-    });
+    // const similarElement = divElement.querySelector('#similar');
+    // const similar = await getSimilar();
+    // similar.results.forEach(movie => {
+    //     let img = IMG_URL + movie.backdrop_path;
+    //     similarElement.innerHTML += `
+    //     <img src="${img}" onclick="document.location=this.id+'/#tv/${movie.id}'" alt="${movie.name}">
+    //     `
+    // });
 
     document.addEventListener("click", e => {
         let handle

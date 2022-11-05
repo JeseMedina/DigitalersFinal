@@ -85,7 +85,7 @@ header {
 
     .container {
         margin: 0 auto;
-        margin-bottom: 6.25em;
+        margin-bottom: 2em;
 
         .title {
             font-weight: 600;
@@ -224,11 +224,12 @@ main {
             font-size: 2rem;
             margin: 0;
             padding: 0;
-            padding-bottom: .5rem;
-            
+            padding: .5rem 0 ;
+
         }
 
         .progress-bar {
+            visibility: hidden;
             display: flex;
             gap: .5rem;
 
@@ -252,6 +253,17 @@ main {
         justify-content: center;
         overflow: hidden;
 
+
+        &:hover {
+            .handle {
+                visibility: visible;
+            }
+
+            &>.progress-bar {
+                visibility: visible;
+            }
+        }
+
         .slider {
             --items-per-screen: 5;
             --slider-index: 0;
@@ -271,11 +283,11 @@ main {
                 border-radius: .1rem;
                 cursor: pointer;
                 transition: .3s ease all;
+                z-index: 10;
 
                 &:hover {
                     position: relative;
                     padding: 0;
-                    box-shadow: 0 0 30px 20px rgba($color: $black, $alpha: .8);
                     transform: scale(1);
                     z-index: 1;
                 }
@@ -284,6 +296,7 @@ main {
         }
 
         .handle {
+            visibility: hidden;
             border: none;
             flex-grow: 0;
             flex-shrink: 0;
@@ -321,6 +334,7 @@ main {
 
             .text {
                 transform: transform 150ms ease-in-out;
+                padding-bottom: 1rem
             }
 
             &:hover,

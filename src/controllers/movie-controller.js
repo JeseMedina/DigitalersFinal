@@ -51,7 +51,7 @@ export default async () => {
     for (let i = 0; i < castLength; i++) {
         let img;
         if (credits.cast[i].profile_path === null) {
-            img = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsImNvbXBpbGVkX3RoZW1lX2Fzc2V0cy9FTElHTyBSRUNSVUlUTUVOVC9wbmcvdXNlci1wcm9maWxlLWRlZmF1bHQucG5nIl1d&language=es';
+            img = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsImNvbXBpbGVkX3RoZW1lX2Fzc2V0cy9FTElHTyBSRUNSVUlUTUVOVC9wbmcvdXNlci1wcm9maWxlLWRlZmF1bHQucG5nIl1d';
         } else {
             img = IMG_URL + credits.cast[i].profile_path;
         }
@@ -70,27 +70,20 @@ export default async () => {
 
 
 
-    const getSimilar = async () => {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
-        return response.json();
-    }
+    // const getSimilar = async () => {
+    //     const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
+    //     return response.json();
+    // }
 
-    const similarElement = divElement.querySelector('#similar');
-    const similar = await getSimilar();
-    console.log(similar)
-    similar.results.forEach(movie => {
-        // console.log(movie.media_type)
-        // let type;
-        // if (movie.media_type === 'movie') {
-        //     type = '/#movie/'
-        // } else {
-        //     type = '/#tv/'
-        // }
-        let img = IMG_URL + movie.backdrop_path;
-        similarElement.innerHTML += `
-        <img src="${img}" onclick="document.location=this.id+'${type}${movie.id}'" alt="${movie.name}">
-        `
-    });
+    // const similarElement = divElement.querySelector('#similar');
+    // const similar = await getSimilar();
+    // console.log(similar)
+    // similar.results.forEach(movie => {
+    //     let img = IMG_URL + movie.backdrop_path;
+    //     similarElement.innerHTML += `
+    //     <img src="${img}" onclick="document.location=this.id+'${type}${movie.id}'" alt="${movie.name}">
+    //     `
+    // });
 
     document.addEventListener("click", e => {
         let handle
