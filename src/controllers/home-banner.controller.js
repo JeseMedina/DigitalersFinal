@@ -17,7 +17,7 @@ export default async () => {
     const info = trending.results[getRandomInt(19)]
 
     const cover = divElement.querySelector('.main-movie');
-    let poster = `https://www.themoviedb.org/t/p/w1280${info.backdrop_path}`;
+    const poster = `https://www.themoviedb.org/t/p/w1280${info.backdrop_path}`;
     cover.style.background = `url(${poster}) no-repeat center `;
     cover.style.backgroundSize = "cover"
 

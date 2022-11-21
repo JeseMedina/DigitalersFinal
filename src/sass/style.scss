@@ -188,6 +188,7 @@ main {
                     gap: 5px;
                     transition: 0.3s;
                     border-radius: 2rem;
+                    object-fit: cover;
 
                     &:hover {
                         box-shadow: 0 8px 16px 0 rgba($color: $white, $alpha: .2)
@@ -311,7 +312,7 @@ main {
             justify-content: center;
             color: $white;
             line-height: 0;
-            transform: background-color 150ms ease-in-out;
+            transition: background-color 150ms ease-in-out;
 
 
             left-handle {
@@ -333,7 +334,7 @@ main {
             }
 
             .text {
-                transform: transform 150ms ease-in-out;
+                transition: transform 150ms ease-in-out;
                 padding-bottom: 1rem
             }
 
@@ -343,7 +344,7 @@ main {
                 font-size: 6rem;
 
                 &.text {
-                    transform: scala(1, 2);
+                    transform: scale(1, 2);
                 }
 
 

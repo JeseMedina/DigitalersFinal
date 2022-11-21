@@ -4,7 +4,6 @@ export default async () => {
     const divElement = document.createElement('div');
     divElement.innerHTML = views
 
-
     let id = window.location.hash.split('/')[1]
 
     const getInfo = async () => {
@@ -22,7 +21,7 @@ export default async () => {
     }else {
         cover.style.background = `url(${poster}) no-repeat center `;
     }
-    
+
     cover.style.backgroundSize = "cover"
 
     const title = divElement.querySelector('#title');

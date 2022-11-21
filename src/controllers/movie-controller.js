@@ -25,12 +25,7 @@ export default async () => {
     year.innerHTML = info.release_date.split('-')[0];
     qualification.innerHTML = info.vote_average + "/10";
 
-    for (let i = 0; i < info.genres.length; i++) {
-        genre.innerHTML += info.genres[i].name;
-        if (i + 1 !== info.genres.length) {
-            genre.innerHTML += ", "
-        }
-    }
+    genre.innerHTML += info.genres?.map(({ name })=> name).join(', ') || '';
 
     const getCredit = async () => {
         const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
@@ -40,13 +35,7 @@ export default async () => {
     const castElement = divElement.querySelector('#cast');
     const credits = await getCredit();
 
-    let castLength = 0;
-
-    if (credits.cast.length > 20) {
-        castLength = 12;
-    } else {
-        castLength = credits.cast.length;
-    }
+    const castLength = Math.min(12, credits.cast.length);
 
     for (let i = 0; i < castLength; i++) {
         let img;
@@ -59,7 +48,7 @@ export default async () => {
 
         castElement.innerHTML += `
         <div class="card">
-            <img src="${img}">
+            <img src="${img}" alt="${credits.cast[i].name}">
             <div class="card-container">
                 <p class="actor">${credits.cast[i].name}</p>
                 <p class="character">${credits.cast[i].character}</p>
