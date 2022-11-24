@@ -3,8 +3,11 @@ import { calculateProgressBar, onHandleClick, throttle } from '../js/carousel'
 const IMG_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default async () => {
-  let divElement = '';
-  divElement = document.createElement('div');
+  const navigate = (route) => {
+    document.location = route;
+  }
+
+  const divElement = document.createElement('div');
   divElement.innerHTML = views
 
   // Trending
@@ -16,15 +19,18 @@ export default async () => {
   const trendingElement = divElement.querySelector('#trending');
   const trending = await getTrending();
   trending.results.forEach(movie => {
-    let img = IMG_URL + movie.backdrop_path;
+    let imgSrc = IMG_URL + movie.backdrop_path;
     let type;
     if (movie.media_type === 'movie') {
-      type = '/#movie/'
+      type = '#movie/'
     } else {
-      type = '/#tv/'
+      type = '#tv/'
     }
-    trendingElement.innerHTML += `
-    <img src="${img}" onclick="document.location=this.id+'${type}${movie.id}'" alt="${movie.name}">`;
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.alt = movie.name;
+    img.onclick = () => navigate(`${type}${movie.id}`);
+    trendingElement.appendChild(img);
   });
 
   // Movies
@@ -35,10 +41,12 @@ export default async () => {
   const moviesElement = divElement.querySelector('#movies');
   const movies = await getMovies();
   movies.results.forEach(movie => {
-    let img = IMG_URL + movie.backdrop_path;
-    moviesElement.innerHTML += `
-    <img src="${img}" onclick="document.location=this.id+'/#movie/${movie.id}'" alt="${movie.name}">
-    `;
+    let imgSrc = IMG_URL + movie.backdrop_path;
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.alt = movie.name;
+    img.onclick = () => navigate(`#movie/${movie.id}`);
+    moviesElement.appendChild(img);
   })
 
   // TV
@@ -49,10 +57,12 @@ export default async () => {
   const tvElement = divElement.querySelector('#tv');
   const tv = await getTv();
   tv.results.forEach(movie => {
-    let img = IMG_URL + movie.backdrop_path;
-    tvElement.innerHTML += `
-    <img src="${img}" onclick="document.location=this.id+'/#tv/${movie.id}'" alt="${movie.name}">
-    `;
+    let imgSrc = IMG_URL + movie.backdrop_path;
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.alt = movie.name;
+    img.onclick = () => navigate(`#tv/${movie.id}`);
+    tvElement.appendChild(img);
   })
 
 

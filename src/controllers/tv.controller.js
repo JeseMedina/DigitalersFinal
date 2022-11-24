@@ -26,38 +26,27 @@ export default async () => {
     .split('-')[0];
     qualification.innerHTML = info.vote_average + "/10";
 
-    for (let i = 0; i < info.genres.length; i++) {
-        genre.innerHTML += info.genres[i].name;
-        if (i + 1 !== info.genres.length) {
-            genre.innerHTML += ", "
-        }
-    }
+    genre.innerHTML += info.genres?.map(({ name })=> name).join(', ') || '';
 
-    const getCredit = async () => {
+    const getCredits = async () => {
         const response = await fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=c4ded25acda802a0e1f075a5f5eab9db&language=es`);
         return response.json();
     }
 
     const castElement = divElement.querySelector('#cast');
-    const credits = await getCredit();
+    const credits = await getCredits();
 
-    let castLength = 0;
-
-    if (credits.cast.length > 20 ){
-        castLength = 12;
-    }else{
-        castLength = credits.cast.length;
-    }
+    const castLength = Math.min(12, credits.cast.length);
 
     for (let i = 0; i < castLength; i++) {
         let img;
         if(credits.cast[i].profile_path === null){
-            img = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsImNvbXBpbGVkX3RoZW1lX2Fzc2V0cy9FTElHTyBSRUNSVUlUTUVOVC9wbmcvdXNlci1wcm9maWxlLWRlZmF1bHQucG5nIl1d&language=es';
+            img = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsImNvbXBpbGVkX3RoZW1lX2Fzc2V0cy9FTElHTyBSRUNSVUlUTUVOVC9wbmcvdXNlci1wcm9maWxlLWRlZmF1bHQucG5nIl1d';
         }else{
             img = IMG_URL + credits.cast[i].profile_path;
         }
-        
-        
+
+
         castElement.innerHTML += `
         <div class="card">
             <img src="${img}">
